@@ -8,3 +8,5 @@ Scrobbles **Audirvana** playing tracks to **Last.fm**. Uses *zsh*, *AppleScript*
 4. Change the ````LAST_FM_USER```` variable in the script to your Last.fm username.
 5. Run the script with ````./audirvana-scrobbler.sh````
 6. Play some music with Audirvana.
+
+![Screenshot](https://github.com/sprtm/audirvana-scrobbler/blob/master/screenshot.png)
