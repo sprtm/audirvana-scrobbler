@@ -1,7 +1,7 @@
 #!/bin/zsh
 
 ##   Audirvana Scrobbler
-##   Ver: 1.0.0
+##   Ver: 1.0.1
 ##
 ##   Scrobble Audirvana tracks to last.fm
 ##   Req: python3 + scrobblerh (pip install)
@@ -11,7 +11,7 @@
 
 # set properties
 export DEFAULT_SLEEP_TIME=3
-export AUDIRVANA_IDLE_THRESHOLD=$(( 300 / $DEFAULT_SLEEP_TIME ))
+export AUDIRVANA_IDLE_THRESHOLD=$(( 300 / DEFAULT_SLEEP_TIME ))
 export AUDIRVANA_IDLE_TIME=0
 export AUDIRVANA_RUNNING_STATE
 export CURRENT_ALBUM=""
@@ -20,7 +20,6 @@ export CURRENT_PLAYER_STATE
 export CURRENT_POSITION=""
 export CURRENT_TRACK=""
 export LASTFM_USER=""
-export LONG_SLEEP_TIME=20
 export NOW_PLAYING_TRACK_DATA=""
 export OK_TO_SCROBBLE=false
 export PLAYED_ENOUGH=240
@@ -32,7 +31,7 @@ export THRESHOLD=75
 export TIMESTAMP
 export TRACK_DURATION=""
 export TRACK_HAS_BEEN_SCROBBLED=false
-export VERSION="1.0.0"
+export VERSION="1.0.1"
 
 
 # functions
@@ -119,16 +118,16 @@ function SCROBBLE {
 # initiate script
 echo "\e[?25l" # hide cursor
 clear
-printf "\n  Audirvana Scrobbler Script $VERSION * Running...\n  =============================================\n\n"
+printf "\n  Audirvana Scrobbler Script %s * Running...\n  =============================================\n\n" "$VERSION"
 
 while sleep $SLEEP_TIME; do
-	if (( $AUDIRVANA_IDLE_TIME >= $AUDIRVANA_IDLE_THRESHOLD )); then
-		SLEEP_TIME="$LONG_SLEEP_TIME"
+	if (( AUDIRVANA_IDLE_TIME >= AUDIRVANA_IDLE_THRESHOLD )); then
+		SLEEP_TIME=20
 	fi
 	IS_AUDIRVANA_RUNNING
 	if [ "$AUDIRVANA_RUNNING_STATE" = no ]; then
 		ECHO_FUNCTION "Application is not running."
-		AUDIRVANA_IDLE_TIME=$(( $AUDIRVANA_IDLE_TIME + 1))
+		AUDIRVANA_IDLE_TIME=$(( AUDIRVANA_IDLE_TIME + 1))
 	elif [ "$AUDIRVANA_RUNNING_STATE" = yes ]; then
 		CHECK_AUDIRVANA_STATE
 		if [ "$CURRENT_PLAYER_STATE" = "Playing" ]; then
@@ -140,7 +139,7 @@ while sleep $SLEEP_TIME; do
 			COMPARE_TRACK_DATA
 		elif [ "$CURRENT_PLAYER_STATE" = "Paused" ] || [ "$CURRENT_PLAYER_STATE" = "Stopped" ]; then
 			ECHO_FUNCTION "Player is stopped/paused."
-			AUDIRVANA_IDLE_TIME=$(( $AUDIRVANA_IDLE_TIME + 1))
+			AUDIRVANA_IDLE_TIME=$(( AUDIRVANA_IDLE_TIME + 1))
 		fi
 	fi
 done
