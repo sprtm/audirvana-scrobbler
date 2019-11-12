@@ -122,7 +122,7 @@ printf "\n  Audirvana Scrobbler Script %s * Running...\n  ======================
 
 while sleep $SLEEP_TIME; do
 	if (( AUDIRVANA_IDLE_TIME >= AUDIRVANA_IDLE_THRESHOLD )); then
-		SLEEP_TIME=20
+		SLEEP_TIME="$LONG_SLEEP_TIME"
 	fi
 	IS_AUDIRVANA_RUNNING
 	if [ "$AUDIRVANA_RUNNING_STATE" = no ]; then
